@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Navbar from './component/navbar'
 import {FiSearch} from "react-icons/fi"
 import {AiFillPlusCircle} from 'react-icons/ai'
+import {HiOutlineUserCircle} from 'react-icons/hi'
 import {collection, getDocs} from 'firebase/firestore'
 import {db} from './config/firebase'
+import {IoMdTrash} from 'react-icons/io'
+import {RiEditCircleLine} from 'react-icons/ri'
+import contactcard from './component/contactcard'
 const App = () => {
 
   const [contacts , setContacts] = useState([]);
@@ -40,9 +44,11 @@ const App = () => {
       </div>
       <AiFillPlusCircle className='text-5xl cursor-pointer text-white'/>
     </div>
-    <div>
+    <div className='mt-4'>
       {
-        
+        contacts.map((contact) => (
+        <contactcard key={contact.id} contact = {contact}/>
+        ))
       }
     </div>
     </div>
