@@ -2,15 +2,26 @@ import React, { useEffect, useState } from 'react'
 import Navbar from './component/navbar'
 import {FiSearch} from "react-icons/fi"
 import {AiFillPlusCircle} from 'react-icons/ai'
-import {HiOutlineUserCircle} from 'react-icons/hi'
+// import {HiOutlineUserCircle} from 'react-icons/hi'
 import {collection, getDocs} from 'firebase/firestore'
 import {db} from './config/firebase'
 import {IoMdTrash} from 'react-icons/io'
-import {RiEditCircleLine} from 'react-icons/ri'
-import contactcard from './component/contactcard'
+// import {RiEditCircleLine} from 'react-icons/ri'
+import Contactcard from './component/contactcard'
+import Modal from './component/modal'
 const App = () => {
 
   const [contacts , setContacts] = useState([]);
+
+  const [isopen , setopen] = useState(false);
+  
+  const onopen = () => {
+    setopen(true);
+  }
+  const onclose = () => {
+    setopen(false);
+  }
+
 
   useEffect(() => {
     const get_contacts = async () =>{
@@ -35,6 +46,7 @@ const App = () => {
 
 
   return (
+    <>
     <div className='mx-auto max-w-[370px] px-4'>
       <Navbar/>
     <div className='flex gap-2'>
@@ -42,16 +54,19 @@ const App = () => {
         <FiSearch className='text-white text-3xl absolute ml-1 '/>
         <input type="text" className='h-10 flex-grow rounded-md border border-white bg-transparent text-white pl-9' />
       </div>
-      <AiFillPlusCircle className='text-5xl cursor-pointer text-white'/>
+      <AiFillPlusCircle onClick={onopen} className='text-5xl cursor-pointer text-white'/>
     </div>
-    <div className='mt-4'>
+    <div className='mt-4 gap-3 flex flex-col'>
       {
         contacts.map((contact) => (
-        <contactcard key={contact.id} contact = {contact}/>
+         <Contactcard key = {contact.id} contact = {contact}/>
         ))
       }
     </div>
     </div>
+    <Modal isopen={isopen} onclose={onclose}>HI</Modal>
+    </>
+    
   
   )
 }
